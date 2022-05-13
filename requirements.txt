@@ -1,0 +1,7 @@
+protobuf
+betterproto[compiler]
+sympy
+cbor2
+poisson-disc
+CairoSVG
+tqdm
