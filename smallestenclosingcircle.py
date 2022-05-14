@@ -19,6 +19,11 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #
 
+if __name__ == "__main__": # This added by winter
+    print("This is a library. It should not be run directly.")
+    exit(1)
+
+
 import math, random
 
 

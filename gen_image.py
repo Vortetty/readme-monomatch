@@ -9,6 +9,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if __name__ == "__main__":
+    print("This is a library. It should not be run directly.")
+    exit(1)
+
 from io import BytesIO
 from itertools import combinations
 from turtle import dot
