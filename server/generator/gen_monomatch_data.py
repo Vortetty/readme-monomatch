@@ -14,95 +14,112 @@ if __name__ == "__main__":
     exit(1)
 
 from math import sqrt
+from typing import Any
 import sympy
 from datetime import datetime
 
-def generateCardDataByCards(targetCards: int):
-    TARGET_CARDS = targetCards
-    prevPrime = sympy.ntheory.generate.prevprime(sqrt(TARGET_CARDS))
-    nextPrime = sympy.ntheory.generate.nextprime(sqrt(TARGET_CARDS))
-    GRID_SIZE = min([[prevPrime**2+prevPrime, prevPrime], [nextPrime**2+nextPrime, nextPrime]], key=lambda x:abs(x[0]-TARGET_CARDS))[1]
-    return generateCardDataByDimension(GRID_SIZE)
+class CardData:
+    def __init__(self, symbol_count, card_count, card_data, grid_size):
+        self.symbol_count = symbol_count
+        self.card_count = card_count
+        self.card_data = card_data
+        self.grid_size = grid_size
 
-def generateCardDataByDimension(targetDimension: int):
-    GRID_SIZE = targetDimension
-    if not sympy.isprime(GRID_SIZE):
-        prevPrime = sympy.ntheory.generate.prevprime(sqrt(GRID_SIZE))
-        nextPrime = sympy.ntheory.generate.nextprime(sqrt(GRID_SIZE))
-        GRID_SIZE = min([[prevPrime**2+prevPrime, prevPrime], [nextPrime**2+nextPrime, nextPrime]], key=lambda x:abs(x[0]-GRID_SIZE))[1]
+    def __getattribute__(self, name: str) -> Any:
+        if name == "symbol_count": return self.symbol_count
+        if name == "card_count": return self.card_count
+        if name == "card_data": return self.card_data
+        if name == "grid_size": return self.grid_size
 
-    print(f"Grid size: {GRID_SIZE}x{GRID_SIZE}")
-    print(f"Card count: {GRID_SIZE**2+GRID_SIZE+1}")
 
-    # Pseudocode for generating monomatch:
-    # // N*N first cards
-    # for I = 0 to N-1
-    #    for J = 0 to N-1
-    #       for K = 0 to N-1
-    #          print ((I*K + J) modulus N)*N + K
-    #       end for
-    #       print N*N + I
-    #       new line
-    #    end for
-    # end for
-    #
-    # // N following cards
-    # for I = 0 to N-1
-    #    for J = 0 to N-1
-    #       print J*N + I
-    #    end for
-    #    print N*N + N
-    #    new line
-    # end for
-    #
-    # // Last card
-    # for I = 0 to N-1
-    #    print N*N + I
-    # end for
+    @classmethod
+    def generateCardDataByCards(cls, targetCards: int):
+        TARGET_CARDS = targetCards
+        prevPrime = sympy.ntheory.generate.prevprime(sqrt(TARGET_CARDS))
+        nextPrime = sympy.ntheory.generate.nextprime(sqrt(TARGET_CARDS))
+        GRID_SIZE = min([[prevPrime**2+prevPrime, prevPrime], [nextPrime**2+nextPrime, nextPrime]], key=lambda x:abs(x[0]-TARGET_CARDS))[1]
+        return cls.generateCardDataByDimension(GRID_SIZE)
 
-    print("Generating cards...")
-    cards = []
-    maxSymbols = GRID_SIZE * GRID_SIZE + GRID_SIZE + 1
-    cardBuf = []
+    @classmethod
+    def generateCardDataByDimension(cls, targetDimension: int):
+        GRID_SIZE = targetDimension
+        if not sympy.isprime(GRID_SIZE):
+            prevPrime = sympy.ntheory.generate.prevprime(sqrt(GRID_SIZE))
+            nextPrime = sympy.ntheory.generate.nextprime(sqrt(GRID_SIZE))
+            GRID_SIZE = min([[prevPrime**2+prevPrime, prevPrime], [nextPrime**2+nextPrime, nextPrime]], key=lambda x:abs(x[0]-GRID_SIZE))[1]
 
-    for i in range(GRID_SIZE):
-        for j in range(GRID_SIZE):
-            for k in range(GRID_SIZE):
-                cardBuf.append( ((i * k + j) % GRID_SIZE) * GRID_SIZE + k )
-            cardBuf.append(GRID_SIZE * GRID_SIZE + i)
+        print(f"Grid size: {GRID_SIZE}x{GRID_SIZE}")
+        print(f"Card count: {GRID_SIZE**2+GRID_SIZE+1}")
+
+        # Pseudocode for generating monomatch:
+        # // N*N first cards
+        # for I = 0 to N-1
+        #    for J = 0 to N-1
+        #       for K = 0 to N-1
+        #          print ((I*K + J) modulus N)*N + K
+        #       end for
+        #       print N*N + I
+        #       new line
+        #    end for
+        # end for
+        #
+        # // N following cards
+        # for I = 0 to N-1
+        #    for J = 0 to N-1
+        #       print J*N + I
+        #    end for
+        #    print N*N + N
+        #    new line
+        # end for
+        #
+        # // Last card
+        # for I = 0 to N-1
+        #    print N*N + I
+        # end for
+
+        print("Generating cards...")
+        cards = []
+        maxSymbols = GRID_SIZE * GRID_SIZE + GRID_SIZE + 1
+        cardBuf = []
+
+        for i in range(GRID_SIZE):
+            for j in range(GRID_SIZE):
+                for k in range(GRID_SIZE):
+                    cardBuf.append( ((i * k + j) % GRID_SIZE) * GRID_SIZE + k )
+                cardBuf.append(GRID_SIZE * GRID_SIZE + i)
+                cards.append(cardBuf)
+                cardBuf = []
+
+        for i in range(GRID_SIZE):
+            for j in range(GRID_SIZE):
+                cardBuf.append(j * GRID_SIZE + i)
+            cardBuf.append(GRID_SIZE * GRID_SIZE + GRID_SIZE)
             cards.append(cardBuf)
             cardBuf = []
 
-    for i in range(GRID_SIZE):
-        for j in range(GRID_SIZE):
-            cardBuf.append(j * GRID_SIZE + i)
-        cardBuf.append(GRID_SIZE * GRID_SIZE + GRID_SIZE)
+        for i in range(GRID_SIZE+1):
+            cardBuf.append(GRID_SIZE * GRID_SIZE + i)
         cards.append(cardBuf)
         cardBuf = []
 
-    for i in range(GRID_SIZE+1):
-        cardBuf.append(GRID_SIZE * GRID_SIZE + i)
-    cards.append(cardBuf)
-    cardBuf = []
+        print(f"Generated {len(cards)} cards using {maxSymbols} symbols at {len(cards[0])} symbols per card\nGenerating dict to write...")
+        cardData = CardData (
+            symbol_count = maxSymbols,
+            card_count = len(cards),
+            grid_size = GRID_SIZE,
+            card_data = cards
+        )
 
-    print(f"Generated {len(cards)} cards using {maxSymbols} symbols at {len(cards[0])} symbols per card\nGenerating dict to write...")
-    cardData = {
-        "symbol_count": maxSymbols,
-        "card_count": len(cards),
-        "grid_size": GRID_SIZE,
-        "card_data": cards
-    }
+        #with open("monomatch_card_data.cbor", "wb") as f:
+        #    print("Generating cbor...")
+        #    data = cbor2.dumps(cardData)
+        #    print("Writing cbor...")
+        #    f.write(data)
 
-    #with open("monomatch_card_data.cbor", "wb") as f:
-    #    print("Generating cbor...")
-    #    data = cbor2.dumps(cardData)
-    #    print("Writing cbor...")
-    #    f.write(data)
+        #with open("monomatch_card_data.json", "w") as f:
+        #    print("Generating json...")
+        #    data = json.dumps(cardData)
+        #    print("Writing json...")
+        #    f.write(data)
 
-    #with open("monomatch_card_data.json", "w") as f:
-    #    print("Generating json...")
-    #    data = json.dumps(cardData)
-    #    print("Writing json...")
-    #    f.write(data)
-
-    return cardData
+        return cardData

@@ -9,6 +9,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import flaskServer
-import readmeManager
-import multiprocessing
+from generator.gen_monomatch_data import CardData
+from xoshiro256ss import xoroshiro256ss
+
+rng = xoroshiro256ss()
+cardData = CardData.generateCardDataByDimension(101) # 10303 cards and symbols

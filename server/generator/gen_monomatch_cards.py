@@ -19,13 +19,13 @@ warnings.filterwarnings("ignore", module="tqdm")
 
 if __name__ == "__main__":
     print("Generating cards...")
-    data = gen_monomatch_data.generateCardDataByDimension(5)
+    data = gen_monomatch_data.CardData.generateCardDataByDimension(5)
     print("Generating images...")
     shutil.rmtree("cards", ignore_errors=True)
     os.mkdir("cards")
     cardBar = tqdm(total=1, unit="step(s)", desc=f"Generating card", position=1, unit_scale=True)
-    for num,i in tqdm(enumerate(data["card_data"]), total=len(data["card_data"]), unit="card(s)", desc="Generating cards", position=0):
+    for num,i in tqdm(enumerate(data.card_data), total=len(data.card_data), unit="card(s)", desc="Generating cards", position=0):
         cardBar.reset()
-        card = gen_image.Card.generateImage(i, data["symbol_count"], tqdmBar=cardBar)
+        card = gen_image.Card.generateImage(i, data.symbol_count, tqdmBar=cardBar)
         card.cardImage.save(f"./cards/{num}.png")
     print("Done!")
