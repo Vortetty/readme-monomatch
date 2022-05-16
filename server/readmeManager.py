@@ -9,8 +9,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from math import sqrt
 from generator.gen_monomatch_data import CardData
 from xoshiro256ss import xoroshiro256ss
+import numpy as np
+import sympy
+import os
+
+# Cd to this dir for safety, ensure smooth running
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
+imageCount = len(filter(lambda x:x.endswith(".svg"), os.listdir("generator/symbols")))
 
 rng = xoroshiro256ss()
-cardData = CardData.generateCardDataByDimension(101) # 10303 cards and symbols
+cardData = CardData.generateCardDataByDimension(
+    sympy.ntheory.generate.prevprime(sqrt(imageCount-sqrt(imageCount)-1)) # The symbol count has been consistently following approximately this pattern
+)
+
+while 

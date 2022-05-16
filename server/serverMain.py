@@ -9,6 +9,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import flaskServer
-import readmeManager
-import multiprocessing
+import flaskServer as server
+import readmeManager as readme
+import multiprocessing as mp
+
+if __name__=='__main__':
+    p1 = mp.Process(target = server.main)
+    p1.start()
+    p2 = mp.Process(target = readme.main)
+    p2.start()

@@ -101,7 +101,6 @@ class Card:
         tqdmBar.update(0.1)
 
         fg_im = Image.new('RGBA', (OUT_DIMENSION+10, OUT_DIMENSION+10), (0, 0, 0, 0))
-        draw = ImageDraw.Draw(fg_im)
         normalGoodDisks = sorted(list(normalizePoints(goodDisks)), key=lambda x: dotDistance(x, (0.5, 0.5))) # Ensure sorted by distance(they should be but i want to be sure for reproducibility)
         idealDiskSize = min(map(
             lambda x:dotDistance(x[0], x[1]),
@@ -113,8 +112,6 @@ class Card:
         COLORS = [
             tuple(int(i) for i in colorsys.hsv_to_rgb(i/RAINBOW_SIZE*360, .5, 1)*np.array([255, 255, 255])) for i in range(RAINBOW_SIZE)
         ]
-        if SCRAMBLE_RAINBOW:
-            np.random.shuffle(COLORS)
         tqdmBar.update(0.1)
 
         def recolorImage(im: Image.Image, color: tuple):
