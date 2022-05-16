@@ -1,162 +1,159 @@
 # Usage
 
-Create svg images in `symbols` named `#.svg`, where `#` is a number corresponding to the number of the symbol starting at 0
+Create svg images in `in_symbols` then run `genSymbolFiles.py` to generate the required data
 
-## Taken from
+## Symbols taken from
 
-svgrepo
-
-- [x] <https://www.svgrepo.com/collection/ionicons-filled-interface-icons/>
-- [x] <https://www.svgrepo.com/collection/ionicons-outline-interface-icons/>
-- [x] <https://www.svgrepo.com/collection/iconoir-icons/>
-- [x] <https://www.svgrepo.com/collection/abstract-vectors/>
-- [x] <https://www.svgrepo.com/collection/miscellaneous-vectors/>
-- [x] <https://www.svgrepo.com/collection/gems-and-crystal-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/cultural-line-icon-vectors/>
-- [ ] <https://www.svgrepo.com/collection/code-and-programming-icons/>
-- [ ] <https://www.svgrepo.com/collection/line-awesome/>
-- [ ] <https://www.svgrepo.com/collection/fluent-ui-icons-outlined/>
-- [ ] <https://www.svgrepo.com/collection/travel-and-places-infographic-icons/>
-- [ ] <https://www.svgrepo.com/collection/objects-infographic-icons/>
-- [ ] <https://www.svgrepo.com/collection/activity-infographic-icons/>
-- [ ] <https://www.svgrepo.com/collection/people-infographic-icons/>
-- [ ] <https://www.svgrepo.com/collection/middle-age-monocolor/>
-- [ ] <https://www.svgrepo.com/collection/summer-travel-vectors/>
-- [ ] <https://www.svgrepo.com/collection/food-and-drinks-infographic-icons/>
-- [ ] <https://www.svgrepo.com/collection/nature-and-animals-infographic-icons/>
-- [ ] <https://www.svgrepo.com/collection/christmas-line-vectors-2/>
-- [ ] <https://www.svgrepo.com/collection/computers-and-hardware-icons/>
-- [ ] <https://www.svgrepo.com/collection/weather-glyphs/>
-- [ ] <https://www.svgrepo.com/collection/minimal-tool-icons/>
-- [ ] <https://www.svgrepo.com/collection/birthday-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/environment-and-ecology-icons/>
-- [ ] <https://www.svgrepo.com/collection/racing-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/fiat-currency-icons/>
-- [ ] <https://www.svgrepo.com/collection/olympic-sports-vectors/>
-- [ ] <https://www.svgrepo.com/collection/os-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/kitchen-items-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/christmas-solid-vectors/>
-- [ ] <https://www.svgrepo.com/collection/arcade-gaming-vectors/>
-- [ ] <https://www.svgrepo.com/collection/christmas-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/cyber-security-privacy-vectors/>
-- [ ] <https://www.svgrepo.com/collection/fashion-cute-icons/>
-- [ ] <https://www.svgrepo.com/collection/elementary-school-vectors/>
-- [ ] <https://www.svgrepo.com/collection/sports-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/leaf-type-vectors/>
-- [ ] <https://www.svgrepo.com/collection/coffee-shop-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/building-icons/>
-- [ ] <https://www.svgrepo.com/collection/electronic-repair-icons/>
-- [ ] <https://www.svgrepo.com/collection/basicons-interface-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/map-icons/>
-- [ ] <https://www.svgrepo.com/collection/entypo-icons/>
-- [ ] <https://www.svgrepo.com/collection/grommet-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/gamer-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/font-awesome-solid-icons/>
-- [ ] <https://www.svgrepo.com/collection/ikonate-bold-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/zondicons-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/open-iconic-icons/>
-- [ ] <https://www.svgrepo.com/collection/feathericon/>
-- [ ] <https://www.svgrepo.com/collection/ficons-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/remix-line-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/geoglyphs-geography-icons/>
-- [ ] <https://www.svgrepo.com/collection/bytesize-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/core-ui-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/japanese-food-meal-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/chinese-food-meal-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/botanical-hand-drawn-vectors/>
-- [ ] <https://www.svgrepo.com/collection/simple-editor-icons/>
-- [ ] <https://www.svgrepo.com/collection/boxicons-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/css-gg-interface-icons/>
-- [ ] <https://www.svgrepo.com/>
-- [ ] <https://www.svgrepo.com/collection/rudez-interface-filled-icons/>
-- [ ] <https://www.svgrepo.com/collection/bakery-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/marketing-office-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/piano-and-keyboard-vector-icons/>
-- [ ] <https://www.svgrepo.com/collection/app-user-interface-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/clothes-outline-icons/>
-- [ ] <https://www.svgrepo.com/collection/summer-glyph-icons/>
-- [ ] <https://www.svgrepo.com/collection/blossom-sakura-outline-vectors/>
-- [ ] <https://www.svgrepo.com/collection/vehicle-bold-icons/>
-- [ ] <https://www.svgrepo.com/collection/business-finance-bold-icons/>
-- [ ] <https://www.svgrepo.com/collection/camera-equipment-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/weather-forecast-bold-icons/>
-- [ ] <https://www.svgrepo.com/collection/sports-bold-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/time-management-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/athletic-sports-bold-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/under-water-sea-animal-vectors/>
-- [ ] <https://www.svgrepo.com/collection/electronic-items-icons/>
-- [ ] <https://www.svgrepo.com/collection/hand-drawn-sports-icons/>
-- [ ] <https://www.svgrepo.com/collection/simple-line-action-icons/>
-- [ ] <https://www.svgrepo.com/collection/sketched-action-icons/>
-- [ ] <https://www.svgrepo.com/collection/oval-line-action-icons/>
-- [ ] <https://www.svgrepo.com/collection/pixel-action-icons/>
-- [ ] <https://www.svgrepo.com/collection/blueprint-action-icons/>
-- [ ] <https://www.svgrepo.com/collection/glyph-action-icons/>
-- [ ] <https://www.svgrepo.com/collection/filled-action-vectors/>
-- [ ] <https://www.svgrepo.com/collection/casino-and-gambling-icons/>
-- [ ] <https://www.svgrepo.com/collection/doodle-icons/>
-- [ ] <https://www.svgrepo.com/collection/pixeden-thin-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/micons-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/themify-glyphs-icons/>
-- [ ] <https://www.svgrepo.com/collection/statistics-icons/>
-- [ ] <https://www.svgrepo.com/collection/gaming-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/peace-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/sexyicons-filled-solid-icons/>
-- [ ] <https://www.svgrepo.com/collection/coffee-break-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/simple-internet-and-computer-icons/>
-- [ ] <https://www.svgrepo.com/collection/astronomy-and-space-vectors/>
-- [ ] <https://www.svgrepo.com/collection/sheet-types-and-page-icons/>
-- [ ] <https://www.svgrepo.com/collection/simple-game-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/food-and-utensils-icons/>
-- [ ] <https://www.svgrepo.com/collection/festival-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/school-education-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/chinese-new-year-line/>
-- [ ] <https://www.svgrepo.com/collection/furniture-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/food-and-drinks-10/>
-- [ ] <https://www.svgrepo.com/collection/sea-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/gis-mapping-icons/>
-- [ ] <https://www.svgrepo.com/collection/outfits-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/smarticons-glyph-icons/>
-- [ ] <https://www.svgrepo.com/collection/fontsio-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/medical-health-icons/>
-- [ ] <https://www.svgrepo.com/collection/happy-trees-outline/>
-- [ ] <https://www.svgrepo.com/collection/ecolocy-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/sickness-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/maki-filled-ui-icons/>
-- [ ] <https://www.svgrepo.com/collection/arrow-interface-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/geometric-shapes-line/>
-- [ ] <https://www.svgrepo.com/collection/position-interface-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/file-type-minimal-icons/>
-- [ ] <https://www.svgrepo.com/collection/data-and-storage-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/mail-online-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/design-editor-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/map-and-navigation-line/>
-- [ ] <https://www.svgrepo.com/collection/tools-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/administration-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/software-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/elusive-icons-interface/>
-- [ ] <https://www.svgrepo.com/collection/uiw-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/element-plus-interface-icons/>
-- [ ] <https://www.svgrepo.com/collection/virtual-reality-glyphs-icons/>
-- [ ] <https://www.svgrepo.com/collection/weather-forecast-glyphs-icons/>
-- [ ] <https://www.svgrepo.com/collection/video-games-glyphs-icons/>
-- [ ] <https://www.svgrepo.com/collection/education-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/astrology-symbols/>
-- [ ] <https://www.svgrepo.com/collection/summer-holidays-glyphs/>
-- [ ] <https://www.svgrepo.com/collection/fast-food-icons/>
-- [ ] <https://www.svgrepo.com/collection/baby-kid-outline-vectors/>
-- [ ] <https://www.svgrepo.com/collection/gui-glyphs-icons/>
-- [ ] <https://www.svgrepo.com/collection/computers-and-hardware-glyphs/>
-- [ ] <https://www.svgrepo.com/collection/currency-bill-icons/>
-- [ ] <https://www.svgrepo.com/collection/applications-and-programming-glyphs/>
-- [ ] <https://www.svgrepo.com/collection/fruits-outlined/>
-- [ ] <https://www.svgrepo.com/collection/summer-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/food-and-cooking-thin-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/vacation-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/virtual-reality-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/weather-and-forecast-icons/>
-- [ ] <https://www.svgrepo.com/collection/summer-holidays-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/navigation-and-map-line-icons/>
-- [ ] <https://www.svgrepo.com/collection/shopping-and-ecommerce-line-vectors/>
-- [ ] <https://www.svgrepo.com/collection/basic-interface-elements/>
-
+- svgrepo
+  - [x] <https://www.svgrepo.com/collection/ionicons-filled-interface-icons/>
+  - [x] <https://www.svgrepo.com/collection/ionicons-outline-interface-icons/>
+  - [x] <https://www.svgrepo.com/collection/iconoir-icons/>
+  - [x] <https://www.svgrepo.com/collection/abstract-vectors/>
+  - [x] <https://www.svgrepo.com/collection/miscellaneous-vectors/>
+  - [x] <https://www.svgrepo.com/collection/gems-and-crystal-line-vectors/>
+  - [x] <https://www.svgrepo.com/collection/code-and-programming-icons/>
+  - [ ] <https://www.svgrepo.com/collection/line-awesome/>
+  - [ ] <https://www.svgrepo.com/collection/fluent-ui-icons-outlined/>
+  - [ ] <https://www.svgrepo.com/collection/travel-and-places-infographic-icons/>
+  - [ ] <https://www.svgrepo.com/collection/objects-infographic-icons/>
+  - [ ] <https://www.svgrepo.com/collection/activity-infographic-icons/>
+  - [ ] <https://www.svgrepo.com/collection/people-infographic-icons/>
+  - [ ] <https://www.svgrepo.com/collection/middle-age-monocolor/>
+  - [ ] <https://www.svgrepo.com/collection/summer-travel-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/food-and-drinks-infographic-icons/>
+  - [ ] <https://www.svgrepo.com/collection/nature-and-animals-infographic-icons/>
+  - [ ] <https://www.svgrepo.com/collection/christmas-line-vectors-2/>
+  - [ ] <https://www.svgrepo.com/collection/computers-and-hardware-icons/>
+  - [ ] <https://www.svgrepo.com/collection/weather-glyphs/>
+  - [ ] <https://www.svgrepo.com/collection/minimal-tool-icons/>
+  - [ ] <https://www.svgrepo.com/collection/birthday-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/environment-and-ecology-icons/>
+  - [ ] <https://www.svgrepo.com/collection/racing-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/fiat-currency-icons/>
+  - [ ] <https://www.svgrepo.com/collection/olympic-sports-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/os-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/kitchen-items-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/christmas-solid-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/arcade-gaming-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/christmas-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/cyber-security-privacy-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/fashion-cute-icons/>
+  - [ ] <https://www.svgrepo.com/collection/elementary-school-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/sports-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/leaf-type-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/coffee-shop-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/building-icons/>
+  - [ ] <https://www.svgrepo.com/collection/electronic-repair-icons/>
+  - [ ] <https://www.svgrepo.com/collection/basicons-interface-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/map-icons/>
+  - [ ] <https://www.svgrepo.com/collection/entypo-icons/>
+  - [ ] <https://www.svgrepo.com/collection/grommet-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/gamer-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/font-awesome-solid-icons/>
+  - [ ] <https://www.svgrepo.com/collection/ikonate-bold-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/zondicons-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/open-iconic-icons/>
+  - [ ] <https://www.svgrepo.com/collection/feathericon/>
+  - [ ] <https://www.svgrepo.com/collection/ficons-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/remix-line-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/geoglyphs-geography-icons/>
+  - [ ] <https://www.svgrepo.com/collection/bytesize-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/core-ui-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/japanese-food-meal-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/chinese-food-meal-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/botanical-hand-drawn-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/simple-editor-icons/>
+  - [ ] <https://www.svgrepo.com/collection/boxicons-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/css-gg-interface-icons/>
+  - [ ] <https://www.svgrepo.com/>
+  - [ ] <https://www.svgrepo.com/collection/rudez-interface-filled-icons/>
+  - [ ] <https://www.svgrepo.com/collection/bakery-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/marketing-office-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/piano-and-keyboard-vector-icons/>
+  - [ ] <https://www.svgrepo.com/collection/app-user-interface-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/clothes-outline-icons/>
+  - [ ] <https://www.svgrepo.com/collection/summer-glyph-icons/>
+  - [ ] <https://www.svgrepo.com/collection/blossom-sakura-outline-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/vehicle-bold-icons/>
+  - [ ] <https://www.svgrepo.com/collection/business-finance-bold-icons/>
+  - [ ] <https://www.svgrepo.com/collection/camera-equipment-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/weather-forecast-bold-icons/>
+  - [ ] <https://www.svgrepo.com/collection/sports-bold-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/time-management-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/athletic-sports-bold-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/under-water-sea-animal-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/electronic-items-icons/>
+  - [ ] <https://www.svgrepo.com/collection/hand-drawn-sports-icons/>
+  - [ ] <https://www.svgrepo.com/collection/simple-line-action-icons/>
+  - [ ] <https://www.svgrepo.com/collection/sketched-action-icons/>
+  - [ ] <https://www.svgrepo.com/collection/oval-line-action-icons/>
+  - [ ] <https://www.svgrepo.com/collection/pixel-action-icons/>
+  - [ ] <https://www.svgrepo.com/collection/blueprint-action-icons/>
+  - [ ] <https://www.svgrepo.com/collection/glyph-action-icons/>
+  - [ ] <https://www.svgrepo.com/collection/filled-action-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/casino-and-gambling-icons/>
+  - [ ] <https://www.svgrepo.com/collection/doodle-icons/>
+  - [ ] <https://www.svgrepo.com/collection/pixeden-thin-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/micons-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/themify-glyphs-icons/>
+  - [ ] <https://www.svgrepo.com/collection/statistics-icons/>
+  - [ ] <https://www.svgrepo.com/collection/gaming-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/peace-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/sexyicons-filled-solid-icons/>
+  - [ ] <https://www.svgrepo.com/collection/coffee-break-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/simple-internet-and-computer-icons/>
+  - [ ] <https://www.svgrepo.com/collection/astronomy-and-space-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/sheet-types-and-page-icons/>
+  - [ ] <https://www.svgrepo.com/collection/simple-game-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/food-and-utensils-icons/>
+  - [ ] <https://www.svgrepo.com/collection/festival-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/school-education-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/chinese-new-year-line/>
+  - [ ] <https://www.svgrepo.com/collection/furniture-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/food-and-drinks-10/>
+  - [ ] <https://www.svgrepo.com/collection/sea-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/gis-mapping-icons/>
+  - [ ] <https://www.svgrepo.com/collection/outfits-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/smarticons-glyph-icons/>
+  - [ ] <https://www.svgrepo.com/collection/fontsio-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/medical-health-icons/>
+  - [ ] <https://www.svgrepo.com/collection/happy-trees-outline/>
+  - [ ] <https://www.svgrepo.com/collection/ecolocy-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/sickness-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/maki-filled-ui-icons/>
+  - [ ] <https://www.svgrepo.com/collection/arrow-interface-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/geometric-shapes-line/>
+  - [ ] <https://www.svgrepo.com/collection/position-interface-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/file-type-minimal-icons/>
+  - [ ] <https://www.svgrepo.com/collection/data-and-storage-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/mail-online-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/design-editor-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/map-and-navigation-line/>
+  - [ ] <https://www.svgrepo.com/collection/tools-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/administration-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/software-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/elusive-icons-interface/>
+  - [ ] <https://www.svgrepo.com/collection/uiw-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/element-plus-interface-icons/>
+  - [ ] <https://www.svgrepo.com/collection/virtual-reality-glyphs-icons/>
+  - [ ] <https://www.svgrepo.com/collection/weather-forecast-glyphs-icons/>
+  - [ ] <https://www.svgrepo.com/collection/video-games-glyphs-icons/>
+  - [ ] <https://www.svgrepo.com/collection/education-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/astrology-symbols/>
+  - [ ] <https://www.svgrepo.com/collection/summer-holidays-glyphs/>
+  - [ ] <https://www.svgrepo.com/collection/fast-food-icons/>
+  - [ ] <https://www.svgrepo.com/collection/baby-kid-outline-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/gui-glyphs-icons/>
+  - [ ] <https://www.svgrepo.com/collection/computers-and-hardware-glyphs/>
+  - [ ] <https://www.svgrepo.com/collection/currency-bill-icons/>
+  - [ ] <https://www.svgrepo.com/collection/applications-and-programming-glyphs/>
+  - [ ] <https://www.svgrepo.com/collection/fruits-outlined/>
+  - [ ] <https://www.svgrepo.com/collection/summer-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/food-and-cooking-thin-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/vacation-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/virtual-reality-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/weather-and-forecast-icons/>
+  - [ ] <https://www.svgrepo.com/collection/summer-holidays-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/navigation-and-map-line-icons/>
+  - [ ] <https://www.svgrepo.com/collection/shopping-and-ecommerce-line-vectors/>
+  - [ ] <https://www.svgrepo.com/collection/basic-interface-elements/>
