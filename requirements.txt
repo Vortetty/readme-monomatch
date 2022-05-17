@@ -5,3 +5,5 @@ cbor2
 poisson-disc
 CairoSVG
 tqdm
+apscheduler
+pillow

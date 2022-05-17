@@ -11,6 +11,7 @@
 
 import server.githubIssueManager as server
 import readmeManager as readme
+import flaskImageProviderApp as fipa
 import multiprocessing as mp
 
 from generator.gen_monomatch_data import CardData
@@ -31,3 +32,5 @@ if __name__ == "__main__": # Windows is dumb and mp needs a guard
     p1.start()
     p2 = mp.Process(target=readme.main, args=[rng, cardData, imageCount])
     p2.start()
+    p3 = mp.Process(target=fipa.main, args=[rng, cardData, imageCount])
+    p3.start()
