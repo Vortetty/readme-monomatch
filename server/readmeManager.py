@@ -24,5 +24,65 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
+readmeData = """# Hey, i'm Kali!
+
+Just a trans girl programming in my free time
+
+## Directory
+
+1. [About me](#a-bit-more-about-me)
+2. [Summary](#summary)
+3. [Monomatch Game](#monomatch)
+
+## A bit more about me
+
+```python
+class basicPronoun():
+    def __init__(self, sub, obj):
+        self.subjective = sub
+        self.objective = obj
+
+kali = {
+    "pronouns": [
+        basicPronoun("it", "its"),
+        basicPronoun("she", "her"),
+        basicPronoun("they", "them"),
+    ],
+    "names": [ "Kali", "Winter", "Tæmt modʒiɹæ", "Vortetty" ]
+    "languages": {{
+        "natural": [ "english" ],
+        "computer": [ "python", "c++", "kotlin", "java", "javascript", "c#", "html", "css" ]
+    }},
+    "current_focus": "Random projects for fun",
+    "fun_fact": "Knowing what to search is half of the battle"
+}
+```
+
+## Summary
+
+![trophy](https://github-profile-trophy.vercel.app/?username=vortetty&theme=dracula)
+
+![Winter's GitHub stats](https://github-readme-stats.vercel.app/api?username=vortetty&theme=dracula&show_icons=true)
+
+![Winter's Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=vortetty&layout=compact&langs_count=10&theme=dracula)
+
+![Winter's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=vortetty&theme=dracula)
+
+## Monomatch
+
+Keep in mind this is a WIP, still in testing.
+
+### How to play
+
+Each card has {icon_count} icons, and only shares one symbol with the other card.
+
+Symbols may be a different size, may be rotated differently, but the color and shape are the same.
+
+Just find the icon they share, and then scroll below the cards and click the correct icon. It will open a github issue with some text in the body, just submit it and it will be given a tag.
+
+Scores update every 10 minutes, and the cards change hourly. If you don't finish the card set within the hour you can still finish it as long as you don't reload the page.
+
+"""
+
 def main(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
 
