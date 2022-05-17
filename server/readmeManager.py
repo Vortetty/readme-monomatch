@@ -15,17 +15,14 @@ from xoshiro256ss import xoroshiro256ss
 import numpy as np
 import sympy
 import os
+import cbor2 as cbor # Using cbor to encode the data for the answers so people can't fudge it easily, has to be statically encoded so an issue can be opened even after the images refresh and still credit the user their points
+import base64        # Base 64 encoding is used to make the data work with a gh issue
+                     # Before the base64 it should be bit rotated by one fourth rounded down of the length of the cbor
 
 # Cd to this dir for safety, ensure smooth running
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-imageCount = len(filter(lambda x:x.endswith(".svg"), os.listdir("generator/symbols")))
+def main(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
 
-rng = xoroshiro256ss()
-cardData = CardData.generateCardDataByDimension(
-    sympy.ntheory.generate.prevprime(sqrt(imageCount-sqrt(imageCount)-1)) # The symbol count has been consistently following approximately this pattern
-)
-
-while 
