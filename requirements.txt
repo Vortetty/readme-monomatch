@@ -7,3 +7,5 @@ CairoSVG
 tqdm
 apscheduler
 pillow
+flask
+waitress

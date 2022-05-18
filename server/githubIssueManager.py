@@ -8,3 +8,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# Patch `https://api.github.com/repos/OWNER/REPO/issues/ISSUE_NUMBER`
+# with the following data:
+#
+# ```json
+# {
+#   "title": f"[correct/incorrect] | {nickname} has {user_points} points",
+#   "status": "closes"
+# }
+import os
+
+# Cd to this dir for safety, ensure smooth running
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)

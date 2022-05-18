@@ -9,6 +9,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import asyncio
 from datetime import date, datetime
 from math import sqrt
 import sched
@@ -20,8 +21,9 @@ import os
 import cbor2 as cbor # Using cbor to encode the data for the answers so people can't fudge it easily, has to be statically encoded so an issue can be opened even after the images refresh and still credit the user their points
 import base64        # Base 64 encoding is used to make the data work with a gh issue
                      # Before the base64 it should be bit rotated by one fourth rounded down of the length of the cbor
-from apscheduler.schedulers.background import BackgroundScheduler
-import signal
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import warnings
+warnings.filterwarnings("ignore", module="apscheduler") # Fix the warnings from the apscheduler's bad code
 
 # Cd to this dir for safety, ensure smooth running
 abspath = os.path.abspath(__file__)
@@ -82,7 +84,7 @@ Each card has {icon_count} icons, and only shares one symbol with the other card
 
 Symbols may be a different size, may be rotated differently, but the color and shape are the same.
 
-Just find the icon they share, and then scroll below the cards and click the correct icon. It will open a github issue with some text in the body, just submit it and it will be given a tag.
+Just find the icon they share, and then scroll below the cards and click the correct icon. It will open a github issue with some text in the body, just submit it and it will be renamed+body changed to indicate your current score and if you got it correct. The bot can only make 5000 requests an hour due to ratelimits so it's only going to be able to handle ~4990 answers an hour.
 
 top 100 scores update every 10 minutes, and the cards change hourly. If you don't finish the card set within the hour you can still finish it as long as you don't reload the page, it will still be scored properly (card metadata is stored in the link).
 
@@ -108,12 +110,16 @@ def update_cards():
     print(f"[{datetime.now().strftime('%d.%b %Y %H:%M:%S')}] cards")
 
 def main(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
-    scheduler = BackgroundScheduler()
-    signal.signal(signal.SIGINT, lambda: scheduler.shutdown())
-    signal.signal(signal.SIGTERM, lambda: scheduler.shutdown())
+    update_cards()
+
+    scheduler = AsyncIOScheduler()
     scheduler.add_job(update_readme, 'cron', minute="10-50/10")
     scheduler.add_job(update_cards, 'cron', minute="0")
     scheduler.start()
+
+    #asyncio.get_event_loop().run_forever() # Pause here, makes a deprecation warning but it works ig
+
+    scheduler._eventloop.run_forever()
 
 
 if __name__ == "__main__":

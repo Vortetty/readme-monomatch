@@ -20,6 +20,11 @@ import sympy
 from math import sqrt
 import os
 
+# Cd to this dir for safety, ensure smooth running
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 imageCount = len(filter(lambda x:x.endswith(".svg"), os.listdir("generator/symbols")))
 rng = xoroshiro256ss()
 cardData = CardData.generateCardDataByDimension(
