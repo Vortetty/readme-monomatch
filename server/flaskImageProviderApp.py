@@ -37,19 +37,26 @@ def card(card_id: str):
         try:
             return send_file(os.path.join(dname, "cards/0.png"))
         except FileNotFoundError:
-            raise abortReason(404)
+            #raise abortReason(404)
+            return send_file(os.path.join(dname, "404.png"))
     elif int(card_id) == 1:
         try:
             return send_file(os.path.join(dname, "cards/1.png"))
         except FileNotFoundError:
-            raise abortReason(404)
+            #raise abortReason(404)
+            return send_file(os.path.join(dname, "404.png"))
     else:
         raise abortReason(403)
 
+@app.route("/monomatch/icon/<filetype>")
 @app.route("/monomatch/icon/<filetype>/<icon_id>")
-def icon(filetype: str, icon_id: str):
-    if not icon_id.isdigit() or icon_id.find(".") != -1:
-        raise abortReason(403)
+def icon(filetype: str, icon_id: str|None=None):
+    if icon_id == None:
+        raise abortReason(403, reason="No icon id was provided")
+    if not icon_id.isdigit() or icon_id.find(".") != -1 or int(icon_id) < 0:
+        raise abortReason(403, reason="Icon id must be a positive whole number")
+    elif icon_id.find("\\") != -1 or icon_id.find("/") != -1:
+        raise abortReason(403, reason="It seems you may have attempted to use a path to hack this, good try but no.")
 
     try:
         if filetype.lower() == "png":
