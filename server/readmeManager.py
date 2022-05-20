@@ -13,6 +13,7 @@ import asyncio
 from datetime import date, datetime
 from math import sqrt
 import sched
+import shutil
 from generator.gen_monomatch_data import CardData
 from xoshiro256ss import xoroshiro256ss
 import numpy as np
@@ -26,6 +27,7 @@ import warnings
 warnings.filterwarnings("ignore", module="apscheduler") # Fix the warnings from the apscheduler's bad code
 import generator.gen_image as genIm
 from tqdm import tqdm
+from PIL import Image
 
 # Cd to this dir for safety, ensure smooth running
 abspath = os.path.abspath(__file__)
@@ -109,6 +111,9 @@ def update_readme(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
     print(f"[{datetime.now().strftime('%d.%b %Y %H:%M:%S')}] readme")
 
 def update_cards(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
+    shutil.rmtree("cards", ignore_errors=True)
+    os.mkdir("cards")
+
     card1_num = rng.next()%np.uint64(len(cardData.card_data))
     card2_num = rng.next()%np.uint64(len(cardData.card_data))
 
@@ -121,12 +126,12 @@ def update_cards(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
     print(f"card1: {card1}\ncard2: {card2}")
 
     print("Gen images")
-    card1_im = genIm.Card.generateImage(card1, imageCount).cardImage
-    card2_im = genIm.Card.generateImage(card2, imageCount).cardImage
+    card1_im = genIm.Card.generateImage(card1, imageCount, outDimension=2048).cardImage
+    card2_im = genIm.Card.generateImage(card2, imageCount, outDimension=2048).cardImage
 
     print("Save images")
-    card1_im.save(f"cards/0.png")
-    card2_im.save(f"cards/1.png")
+    card1_im.quantize(256).save(f"cards/0.png", optimize=True)
+    card2_im.quantize(256).save(f"cards/1.png", optimize=True)
     print(f"[{datetime.now().strftime('%d.%b %Y %H:%M:%S')}] cards")
 
 def main(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
@@ -141,4 +146,4 @@ def main(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
 
 
 if __name__ == "__main__":
-    main(xoroshiro256ss(), CardData.generateCardDataByCards(5), 0)
+    main(xoroshiro256ss(), CardData.generateCardDataByCards(500), 0)
