@@ -16,18 +16,20 @@ class xoroshiro256ss:
         self.state: np.ndarray[4, np.uint64] = np.random.randint(0, 2**64, 4, dtype=np.uint64)
 
     def next(self) -> np.uint64:
-        result: np.uint64 = self.state[0] + self.state[3]
-        t: np.uint64 = self.state[1] << 17
+        result: np.uint64 = (self.state[0] + self.state[3]).astype(np.uint64)
+        t: np.uint64 = (self.state[1] << np.uint64(17)).astype(np.uint64)
 
-        self.state[2] ^= self.state[0]
-        self.state[3] ^= self.state[1]
-        self.state[1] ^= self.state[2]
-        self.state[0] ^= self.state[3]
+        self.state[2] = (self.state[2] ^ self.state[0]).astype(np.uint64)
+        self.state[3] = (self.state[3] ^ self.state[1]).astype(np.uint64)
+        self.state[1] = (self.state[1] ^ self.state[2]).astype(np.uint64)
+        self.state[0] = (self.state[0] ^ self.state[3]).astype(np.uint64)
 
-        self.state[2] ^= t
-        self.state[3] = self.rol64(self.state[3], 45)
+        self.state[2] = (self.state[2] ^ t).astype(np.uint64)
+        self.state[3] = self.rol64(self.state[3], 45).astype(np.uint64)
 
-        return result
+        return result.astype(np.uint64)
 
-    def rol64(self, x: np.uint64, k: np.uint64):
-        return (x << k) | (x >> (64 - k))
+    def rol64(self, x: np.uint64, k: np.uint64) -> np.uint64:
+        x = np.uint64(x)
+        k = np.uint64(k)
+        return ((x << k).astype(np.uint64) | (x >> (np.uint64(64) - k).astype(np.uint64))).astype(np.uint64)

@@ -23,11 +23,15 @@ import numpy as np
 from PIL import Image, ImageDraw
 import cairosvg as csvg
 import colorsys
-import smallestenclosingcircle as sec
+from . import smallestenclosingcircle as sec
 from tqdm import tqdm
+import os
 
 class dummyTqdm:
     def __init__(self, *args, **kwargs):
+        pass
+
+    def update(self, *args, **kwargs):
         pass
 
 class Card:
@@ -42,10 +46,11 @@ class Card:
         self.givenDotSpacingMult = givenDotSpacingMult
 
     @classmethod
-    def generateImage(cls, cardData: list, symbolCount: int, outDimension: int=4096, dotSpacingMult: int=128, enableDebugPrint: Boolean|int=False, tqdmBar: tqdm|NoneType=None):
+    def generateImage(cls, cardData: list, symbolCount: int, outDimension: int=4096, dotSpacingMult: int=128, enableDebugPrint: Boolean|int=False, tqdmBar: tqdm|dummyTqdm=dummyTqdm()):
+        abspath = os.path.abspath(__file__)
+        dname = os.path.dirname(abspath)
         CARD_DATA = [
-            [j, i]
-            for i,j in enumerate(cardData)
+            [j, i] for i,j in enumerate(cardData)
         ]
         SYMBOL_COUNT = symbolCount
         RAINBOW_SIZE = 128
@@ -125,7 +130,7 @@ class Card:
 
         def importSvg(id: int):
             with BytesIO() as f:
-                csvg.svg2png(url=f"./symbols/{id}.svg", write_to=f, output_height=idealDiskSize*4)
+                csvg.svg2png(url=os.path.join(dname, f"symbols/{id}.svg"), write_to=f, output_height=idealDiskSize*4)
                 im = Image.open(f)
                 im = im.crop(im.getbbox())
                 im = im.rotate(np.random.randint(0, 359), Image.BICUBIC, expand=True)

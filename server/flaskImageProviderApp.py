@@ -16,20 +16,56 @@ try:
 except:
     print("This program requires python >=3.10.0 due to the use of match/case")
 
+from io import BytesIO
 import json
-from flask import Flask, redirect, send_file, abort, render_template
+from flask import Flask, redirect, Response
 from flask_compress import Compress
 from waitress import serve
 import os
 from werkzeug.exceptions import HTTPException
+import magic
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 # Cd to this dir for safety, ensure smooth running
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
+fname = os.path.basename(__file__)
 # os.chdir(dname)
 
 app = Flask(__name__)
-Compress(app)
+app.config.update(
+    {
+        "COMPRESS_MIMETYPES": [
+            "text/html",
+            "image/png",
+            "image/svg+xml",
+            "application/json"
+        ],
+        "COMPRESS_LEVEL": 9,
+        "COMPRESS_BR_LEVEL": 11,
+        "COMPRESS_DEFLATE_LEVEL": 9
+    }
+)
+compress = Compress(app)
+mimeFind = magic.Magic(mime=True)
+jinjaEnv = Environment(
+    loader=PackageLoader(fname.replace(".py", ""), "templates"),
+    autoescape=select_autoescape()
+)
+
+def send_file(file_path: str) -> Response:
+    return Response(
+        open(file_path, "rb").read() if os.path.isfile(file_path) else "",
+        mimetype=mimeFind.from_file(file_path)
+    )
+
+def render_template(template_path: str, **kwargs):
+    template = jinjaEnv.get_template(template_path)
+    rendered = template.render(**kwargs)
+    return compress.after_request(Response(
+        rendered.encode("utf-8"),
+        mimetype="text/html"
+    ))
 
 class abortReason (HTTPException):
     def __init__(self, code: int, reason: str=""):
@@ -46,13 +82,11 @@ def card(card_id: str):
         try:
             return send_file(os.path.join(dname, "cards/0.png"))
         except FileNotFoundError:
-            #raise abortReason(404)
             return send_file(os.path.join(dname, "404.png"))
     elif int(card_id) == 1:
         try:
             return send_file(os.path.join(dname, "cards/1.png"))
         except FileNotFoundError:
-            #raise abortReason(404)
             return send_file(os.path.join(dname, "404.png"))
     else:
         raise abortReason(403)
@@ -69,13 +103,15 @@ def icon(filetype: str, icon_id: str|None=None):
 
     try:
         if filetype.lower() == "png":
-            return send_file(f"generator/symbols/png/{int(icon_id)}.png")
+            return send_file(os.path.join(dname, f"generator/symbols/png/{int(icon_id)}.png"))
         elif filetype.lower() == "svg":
-            return send_file(f"generator/symbols/{int(icon_id)}.svg")
+            return send_file(os.path.join(dname, f"generator/symbols/{int(icon_id)}.svg"))
         else:
             raise abortReason(404, reason="Filetype not supported")
     except FileNotFoundError as e:
         raise abortReason(404, reason=f"Invalid image ID, valid range is 0-{len(os.listdir(os.path.join(dname, 'generator/symbols/png')))-1}")
+    except Exception:
+        raise abortReason(500)
 
 @app.errorhandler(abortReason)
 def page_not_found(error: abortReason):
@@ -106,7 +142,7 @@ def page_not_found(error: abortReason):
         case 303: errorMessageText = "See Other"
         case 304: errorMessageText = "Not Modified"
         case 305: errorMessageText = "Use Proxy"
-        case 306: errorMessageText = "Switch Proxy"
+        case 306: errorMessageText = "Unused"
         case 307: errorMessageText = "Temporary Redirect"
         case 308: errorMessageText = "Permanent Redirect"
         case 400: errorMessageText = "Bad Request"
@@ -151,6 +187,10 @@ def page_not_found(error: abortReason):
         case 511: errorMessageText = "Network Authentication Required"
 
     return render_template('error_message.html', errorCode=error.code, errorMessage=errorMessageText, errorReason=error.reason), error.code
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_file(os.path.join(dname, '404.ico'))
 
 def main():
     serve(app, host="0.0.0.0", port=8080)

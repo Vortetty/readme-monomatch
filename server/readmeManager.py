@@ -24,6 +24,8 @@ import base64        # Base 64 encoding is used to make the data work with a gh 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import warnings
 warnings.filterwarnings("ignore", module="apscheduler") # Fix the warnings from the apscheduler's bad code
+import generator.gen_image as genIm
+from tqdm import tqdm
 
 # Cd to this dir for safety, ensure smooth running
 abspath = os.path.abspath(__file__)
@@ -103,24 +105,40 @@ top 100 scores update every 10 minutes, and the cards change hourly. If you don'
 {recent_score_table}
 """
 
-def update_readme():
+def update_readme(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
     print(f"[{datetime.now().strftime('%d.%b %Y %H:%M:%S')}] readme")
 
-def update_cards():
+def update_cards(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
+    card1_num = rng.next()%np.uint64(len(cardData.card_data))
+    card2_num = rng.next()%np.uint64(len(cardData.card_data))
+
+    print (f"card1: {card1_num}\ncard2: {card2_num}")
+
+    print("Get data")
+    card1 = cardData.card_data[card1_num]
+    card2 = cardData.card_data[card2_num]
+
+    print(f"card1: {card1}\ncard2: {card2}")
+
+    print("Gen images")
+    card1_im = genIm.Card.generateImage(card1, imageCount).cardImage
+    card2_im = genIm.Card.generateImage(card2, imageCount).cardImage
+
+    print("Save images")
+    card1_im.save(f"cards/0.png")
+    card2_im.save(f"cards/1.png")
     print(f"[{datetime.now().strftime('%d.%b %Y %H:%M:%S')}] cards")
 
 def main(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
-    update_cards()
+    update_cards(rng, cardData, imageCount)
 
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(update_readme, 'cron', minute="10-50/10")
-    scheduler.add_job(update_cards, 'cron', minute="0")
+    scheduler.add_job(update_readme, 'cron', kwargs={"rng": rng, "cardData": cardData, "imageCount": imageCount}, minute="10-50/10")
+    scheduler.add_job(update_cards, 'cron', kwargs={"rng": rng, "cardData": cardData, "imageCount": imageCount}, minute="0")
     scheduler.start()
-
-    #asyncio.get_event_loop().run_forever() # Pause here, makes a deprecation warning but it works ig
 
     scheduler._eventloop.run_forever()
 
 
 if __name__ == "__main__":
-    main(xoroshiro256ss(), CardData(0, 0, [], 0), 0)
+    main(xoroshiro256ss(), CardData.generateCardDataByCards(5), 0)

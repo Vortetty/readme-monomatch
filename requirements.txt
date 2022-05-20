@@ -9,4 +9,5 @@ apscheduler
 pillow
 flask
 flask-compress
+python-magic
 waitress

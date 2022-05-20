@@ -9,8 +9,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import gen_monomatch_data
-import gen_image
+from . import gen_monomatch_data
+from . import gen_image
 import os, shutil
 from tqdm import tqdm
 import warnings

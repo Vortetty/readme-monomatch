@@ -25,11 +25,11 @@ class CardData:
         self.card_data = card_data
         self.grid_size = grid_size
 
-    def __getattribute__(self, name: str) -> Any:
-        if name == "symbol_count": return self.symbol_count
-        if name == "card_count": return self.card_count
-        if name == "card_data": return self.card_data
-        if name == "grid_size": return self.grid_size
+    def __getitem__(self, name: str) -> Any:
+        if   name == "symbol_count": return self.symbol_count
+        elif name == "card_count":   return self.card_count
+        elif name == "card_data":    return self.card_data
+        elif name == "grid_size":    return self.grid_size
 
 
     @classmethod
