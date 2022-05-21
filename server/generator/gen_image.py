@@ -29,9 +29,11 @@ import os
 
 class dummyTqdm:
     def __init__(self, *args, **kwargs):
+        # Dummy function
         pass
 
     def update(self, *args, **kwargs):
+        # Dummy function
         pass
 
 class Card:
@@ -54,7 +56,6 @@ class Card:
         ]
         SYMBOL_COUNT = symbolCount
         RAINBOW_SIZE = 128
-        SCRAMBLE_RAINBOW = False
         OUT_DIMENSION = outDimension
         #OUT_FILE = "monomatch.png"
 
