@@ -108,11 +108,18 @@ top 100 scores update every 10 minutes, and the cards change hourly. If you don'
 """
 
 def update_readme(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
-    print(f"[{datetime.now().strftime('%d.%b %Y %H:%M:%S')}] readme")
+    start = datetime.now()
+    end = datetime.now()
+    endTime = end.strftime('%d-%m-%Y %H:%M:%S.%f')[:-3]
+    diffParts = str(end-start).split(".")
+    diff = ".".join([*diffParts[:-1], diffParts[-1].ljust(3, "0")[:3]]) if len(diffParts) > 1 else diffParts[0]+".000"
+    print(f"[{endTime}] ({diff}) readme")
 
 def update_cards(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
+    start = datetime.now()
     shutil.rmtree("cards", ignore_errors=True)
-    os.mkdir("cards")
+    try: os.mkdir("cards")
+    except: pass
 
     card1_num = rng.next()%np.uint64(len(cardData.card_data))
     card2_num = rng.next()%np.uint64(len(cardData.card_data))
@@ -130,11 +137,19 @@ def update_cards(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
     card2_im = genIm.Card.generateImage(card2, imageCount, outDimension=2048).cardImage.quantize(256)
 
     print("Save images")
+    print("PNG 0")
     card1_im.save(f"cards/0.png", optimize=True)
-    card1_im.save(f"cards/0.jpg", optimize=True)
+    print("PNG 1")
     card2_im.save(f"cards/1.png", optimize=True)
-    card2_im.save(f"cards/1.jpg", optimize=True)
-    print(f"[{datetime.now().strftime('%d.%b %Y %H:%M:%S')}] cards")
+    print("Webp 0")
+    card1_im.convert("RGBA").save(f"cards/0.webp", lossless=True, method=6, quality=100)
+    print("Webp 1")
+    card2_im.convert("RGBA").save(f"cards/1.webp", lossless=True, method=6, quality=100)
+    end = datetime.now()
+    endTime = end.strftime('%d-%m-%Y %H:%M:%S.%f')[:-3]
+    diffParts = str(end-start).split(".")
+    diff = ".".join([*diffParts[:-1], diffParts[-1].ljust(3, "0")[:3]]) if len(diffParts) > 1 else diffParts[0]+".000"
+    print(f"[{endTime}] ({diff}) cards")
 
 def main(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
     update_cards(rng, cardData, imageCount)

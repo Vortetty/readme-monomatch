@@ -47,9 +47,11 @@ def importSvg(id: int):
         im = recolorImage(im, COLORS[id%len(COLORS)])
         return im
 def genImages(fileList: list, threadNum: int, offset: int):
-    for i,file in tqdm(enumerate(fileList), total=len(fileList), unit="file(s)", desc=f"Generating files (T{threadNum+1})", position=threadNum, leave=False):
+    for i,file in tqdm(enumerate(fileList), total=len(fileList), unit="file(s)", desc=f"Generating files (T-{hex(threadNum+1).upper().replace('X', 'x')})", position=threadNum, leave=False):
         shutil.copyfile(f"in_symbols/{file}", f"symbols/{i+offset}.svg")
-        importSvg(i+offset).save(f"symbols/png/{i+offset}.png", optimize=True)
+        im = importSvg(i+offset)
+        im.save(f"symbols/png/{i+offset}.png", optimize=True)
+        im.convert("RGBA").save(f"symbols/webp/{i+offset}.webp", lossless=True, method=6, quality=100)
 
 def genImagesMP(j):
     genImages(*j)
@@ -64,6 +66,7 @@ if __name__ == "__main__": # Windows is dumb and mp needs a guard
     shutil.rmtree("symbols", ignore_errors=True)
     os.mkdir("symbols")
     os.mkdir("symbols/png")
+    os.mkdir("symbols/webp")
 
     svgFiles = [f for f in os.listdir("in_symbols") if f.endswith(".svg")]
     fileCount = len(svgFiles)
@@ -103,12 +106,15 @@ if __name__ == "__main__": # Windows is dumb and mp needs a guard
     #
     svgFiles = [f for f in os.listdir("symbols") if f.endswith(".svg")]
     pngFiles = [f for f in os.listdir("symbols/png") if f.endswith(".png")]
+    webpFiles = [f for f in os.listdir("symbols/webp") if f.endswith(".webp")]
     svgFilesize = sum([os.path.getsize(os.path.join(dname, "symbols", f)) for f in svgFiles])
     pngFilesize = sum([os.path.getsize(os.path.join(dname, "symbols/png", f)) for f in pngFiles])
+    webpFilesize = sum([os.path.getsize(os.path.join(dname, "symbols/webp", f)) for f in webpFiles])
     print("\nFilesizes:")
     print(f"  Size of SVGs: {sizeof_fmt(svgFilesize)}")
     print(f"  Size of PNGs: {sizeof_fmt(pngFilesize)}")
-    print(f"  Total size: {sizeof_fmt(svgFilesize+pngFilesize)}")
+    print(f"  Size of WebPs: {sizeof_fmt(webpFilesize)}")
+    print(f"  Total size: {sizeof_fmt(svgFilesize+pngFilesize+webpFilesize)}")
 
     if hasattr(os, 'statvfs'):  # POSIX
         def disk_usage(path):
@@ -123,9 +129,11 @@ if __name__ == "__main__": # Windows is dumb and mp needs a guard
     if disk_usage(True) == True:
         svgSizeOnDisk = sum([disk_usage(os.path.join(dname, "symbols", f)) for f in svgFiles])
         pngSizeOnDisk = sum([disk_usage(os.path.join(dname, "symbols/png", f)) for f in pngFiles])
+        webpSizeOnDisk = sum([disk_usage(os.path.join(dname, "symbols/webp", f)) for f in webpFiles])
         print("\nDisk space used:")
         print(f"  Size of SVGs on disk: {sizeof_fmt(svgSizeOnDisk)}")
         print(f"  Size of PNGs on disk: {sizeof_fmt(pngSizeOnDisk)}")
-        print(f"  Total size on disk: {sizeof_fmt(svgSizeOnDisk+pngSizeOnDisk)}")
+        print(f"  Size of WebPs on disk: {sizeof_fmt(webpSizeOnDisk)}")
+        print(f"  Total size on disk: {sizeof_fmt(svgSizeOnDisk+pngSizeOnDisk+webpSizeOnDisk)}")
     else:
         print("Could not calculate disk usage")
