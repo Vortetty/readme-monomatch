@@ -126,12 +126,14 @@ def update_cards(rng: xoroshiro256ss, cardData: CardData, imageCount: int):
     print(f"card1: {card1}\ncard2: {card2}")
 
     print("Gen images")
-    card1_im = genIm.Card.generateImage(card1, imageCount, outDimension=2048).cardImage
-    card2_im = genIm.Card.generateImage(card2, imageCount, outDimension=2048).cardImage
+    card1_im = genIm.Card.generateImage(card1, imageCount, outDimension=2048).cardImage.quantize(256)
+    card2_im = genIm.Card.generateImage(card2, imageCount, outDimension=2048).cardImage.quantize(256)
 
     print("Save images")
-    card1_im.quantize(256).save(f"cards/0.png", optimize=True)
-    card2_im.quantize(256).save(f"cards/1.png", optimize=True)
+    card1_im.save(f"cards/0.png", optimize=True)
+    card1_im.save(f"cards/0.jpg", optimize=True)
+    card2_im.save(f"cards/1.png", optimize=True)
+    card2_im.save(f"cards/1.jpg", optimize=True)
     print(f"[{datetime.now().strftime('%d.%b %Y %H:%M:%S')}] cards")
 
 def main(rng: xoroshiro256ss, cardData: CardData, imageCount: int):

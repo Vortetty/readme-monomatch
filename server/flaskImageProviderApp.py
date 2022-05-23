@@ -85,16 +85,24 @@ class abortReason (HTTPException):
 def index():
     return redirect("https://github.com/Vortetty/readme-monomatch", code=308)
 
-@app.route("/monomatch/card/<card_id>")
-def card(card_id: str):
+@app.route("/monomatch/card/<filetype>/<card_id>")
+def card(filetype: str, card_id: str|None=None):
+    ext = ""
+    if filetype.lower() == "png":
+        ext = "png"
+    elif filetype.lower() == "jpg" or filetype.lower() == "jpeg":
+        ext = "jpg"
+    else:
+        raise abortReason(404, reason="Filetype not supported, please use png or jpg")
+
     if int(card_id) == 0:
         try:
-            return send_file(os.path.join(dname, "cards/0.png"))
+            return send_file(os.path.join(dname, f"cards/0.{ext}"))
         except FileNotFoundError:
             return send_file(os.path.join(dname, "404.png"))
     elif int(card_id) == 1:
         try:
-            return send_file(os.path.join(dname, "cards/1.png"))
+            return send_file(os.path.join(dname, f"cards/0.{ext}"))
         except FileNotFoundError:
             return send_file(os.path.join(dname, "404.png"))
     else:
@@ -116,7 +124,7 @@ def icon(filetype: str, icon_id: str|None=None):
         elif filetype.lower() == "svg":
             return send_file(os.path.join(dname, f"generator/symbols/{int(icon_id)}.svg"))
         else:
-            raise abortReason(404, reason="Filetype not supported")
+            raise abortReason(404, reason="Filetype not supported, please use png or svg")
     except FileNotFoundError as e:
         raise abortReason(404, reason=f"Invalid image ID, valid range is 0-{len(os.listdir(os.path.join(dname, 'generator/symbols/png')))-1}")
     except Exception:
