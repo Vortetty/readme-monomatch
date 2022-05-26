@@ -67,7 +67,18 @@ ICON_COLORS = [
     tuple(int(i) for i in colorsys.hsv_to_rgb(i/512*360, .5, 1)*np.array([255, 255, 255])) for i in range(512)
 ]
 
+class abortReason (HTTPException):
+    def __init__(self, code: int, reason: str="", overrideErrorMessageText: str=None):
+        self.code = code
+        self.reason = reason
+        self.overrideErrorMessageText = overrideErrorMessageText
+
+
 def send_file(file_path: str) -> Response:
+    mime = mimeFind.from_file(file_path).lower()
+    accepts = request.headers.get("Accept").lower()
+    if accepts.find(mime) == -1 and accepts.find("*/*") == -1:
+        raise abortReason(422, f"No supported mimetype is marked in the \"Accept\" header")
     return Response(
         open(file_path, "rb").read() if os.path.isfile(file_path) else "",
         mimetype=mimeFind.from_file(file_path)
@@ -80,13 +91,6 @@ def render_template(template_path: str, **kwargs):
         rendered.encode("utf-8"),
         mimetype="text/html"
     ))
-
-class abortReason (HTTPException):
-    def __init__(self, code: int, reason: str="", overrideErrorMessageText: str=None):
-        self.code = code
-        self.reason = reason
-        self.overrideErrorMessageText = overrideErrorMessageText
-
 @app.route("/")
 def index():
     return redirect("https://github.com/Vortetty/readme-monomatch", code=308)
@@ -102,17 +106,11 @@ def card(filetype: str, card_id: str|None=None):
         raise abortReason(404, reason="Filetype not supported, please use png or webp")
 
     if int(card_id) == 0:
-        try:
-            return send_file(os.path.join(dname, f"cards/0.{ext}"))
-        except FileNotFoundError:
-            return send_file(os.path.join(dname, "404.png"))
+        return send_file(os.path.join(dname, f"cards/0.{ext}"))
     elif int(card_id) == 1:
-        try:
-            return send_file(os.path.join(dname, f"cards/1.{ext}"))
-        except FileNotFoundError:
-            return send_file(os.path.join(dname, "404.png"))
+        return send_file(os.path.join(dname, f"cards/1.{ext}"))
     else:
-        raise abortReason(403)
+        raise abortReason(404, reason="Invalid card id, please use 0 or 1")
 
 @app.route("/monomatch/icon/<filetype>")
 @app.route("/monomatch/icon/<filetype>/<icon_id>")
@@ -213,10 +211,17 @@ def page_not_found(error: abortReason):
             case 511: errorMessageText = "Network Authentication Required"
             case _:   errorMessageText = "Unknown Error"
 
-    return render_template('error_message.html', errorCode=error.code, errorMessage=errorMessageText, errorReason=error.reason), error.code
+    accept = request.headers.get('Accept').lower().split(',')
+    if accept.find('text/html') != -1:
+        return render_template('error_message.html', errorCode=error.code, errorMessage=errorMessageText, errorReason=error.reason), error.code
+    else: # assume json is okay for error messages
+        return json.dumps({"error": errorMessageText, "errorReason": error.reason}), error.code
 
 @app.route('/favicon.ico')
 def favicon():
+    accepts = request.headers.get("Accept").lower()
+    if accepts.find("image/x-icon") == -1 and accepts.find("*/*") == -1:
+        raise abortReason(422, f"No supported mimetype is marked in the \"Accept\" header")
     return Response(
         open(os.path.join(dname, 'favicon.ico'), "rb").read().replace(b"\xFF\xFF\xFF", bytes(reversed(ICON_COLORS[np.random.randint(0, 2**31-1, 3)[0]%len(ICON_COLORS)]))),
         mimetype="image/x-icon"
